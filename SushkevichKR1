@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Проверка количества аргументов
+if [ $# -ne 3 ]; then
+  echo "Ошибка: Неверное количество аргументов."
+  echo "Использование: $0 <каталог1> <каталог2> <количество символов>"
+  exit 1
+fi
+
+# Извлечение аргументов
+directory1=$1
+directory2=$2
+char_count=$3
+
+# Выполнение поиска файлов и вывод результатов
+find "$directory1" "$directory2" -type f -name '*' | awk -F/ -v count=$char_count '{print $0 ":" length($NF)}' | sort -t: -k2n | tee sorted_output.txt
